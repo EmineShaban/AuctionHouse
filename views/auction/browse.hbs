@@ -1,0 +1,44 @@
+<main>
+    {{#if error}}
+    <div class="error-box">
+        <span>{{error}}</span>
+    </div>
+    {{/if}}
+
+    {{!-- <section id="catalog-section" class="spaced">
+{{#if predmetOffer}}
+    <div class="added-hotels">
+        {{#each hotelOffer}}
+        {{>hotelTemplate}}
+        {{/each}}
+    </div>
+
+    {{else}}
+    <div class="guest">
+        There are no Hotels found...
+    </div>
+    {{/if}} --}}
+        <h1 class="item">Auctions</h1>
+{{#if predmetOffer}}
+
+        <!-- List of available auctions -->
+        <ul class="catalog cards">
+          
+         {{#each predmetOffer}}
+        {{>itemTemplate}}
+        {{/each}}
+        </ul>
+    {{else}}
+
+        <!-- If there are no auctions to display -->
+        <div class="item pad-large align-center">
+            <p>Nothing has been listed yet. Be the first!</p>
+            <div>
+                <a class="action" href="/auction/create">Publish Auction</a>
+            </div>
+        </div>
+        {{/if}}
+
+    </section>
+
+</main>

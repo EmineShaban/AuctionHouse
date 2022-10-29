@@ -4,17 +4,17 @@ const { isAuth } = require('../middlewares/authMiddleware')
 const userService = require('../services/userService')
 
 router.get('/', async (req, res) => {
-    const hotelOffer = await bookingServices.getAll().lean()
-    hotelOffer.sort((a, b) => b.freeRooms - a.freeRooms)
-    res.render('home', { hotelOffer })
+    // const hotelOffer = await bookingServices.getAll().lean()
+    // hotelOffer.sort((a, b) => b.freeRooms - a.freeRooms)
+    res.render('home')
 })
 
-router.get('/profile', isAuth, async (req, res) => {
-    const user = await userService.getOne(req.user?._id).lean()
-    const booked = await bookingServices.getAll(user.bookedHotels).lean()
-    const publicationTitles = booked.map(x => x.hotel).join(', ')
-    console.log(publicationTitles)
-    res.render('home/profile', { ...user, publicationTitles })
-})
+// router.get('/profile', isAuth, async (req, res) => {
+//     const user = await userService.getOne(req.user?._id).lean()
+//     const booked = await bookingServices.getAll(user.bookedHotels).lean()
+//     const publicationTitles = booked.map(x => x.hotel).join(', ')
+//     console.log(publicationTitles)
+//     res.render('home/profile', { ...user, publicationTitles })
+// })
 
 module.exports = router

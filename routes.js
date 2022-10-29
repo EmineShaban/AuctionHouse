@@ -7,7 +7,7 @@ const auctionController = require('./controllers/auctionController')
 
 router.use(homeController)
 router.use('/auth', authController)
-router.use('/booking', auctionController)
+router.use('/auction', auctionController)
 
 
 module.exports = router

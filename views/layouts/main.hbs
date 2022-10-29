@@ -1,59 +1,3 @@
-{{!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>BookingUni</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-    <div id="container">
-            {{#if error}}
-            <div class="notification errorBox">
-                {{!-- {{#each errors}} --}}
-                {{!-- <span>{{error}}</span> --}}
-                {{!-- {{/each}} --}}
-            {{!-- </div>
-            {{/if}}
-        {{#if user}}  --}}
-        {{!-- {{#if error}}
-        <div class="error">
-            <p>{{error}}</p>
-        </div>
-        {{/if}} --}}
-        {{!-- <div>
-            <div class="notification loadingBox">
-                Loading …
-            </div>
-            <div class="notification infoBox">
-                <span>Info</span>
-            </div> --}}
-{{!-- 
-        </div>
-        <nav>
-            <div class="left-container">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/booking/create">Add +</a></li>
-                </ul>
-            </div>
-            <div class="right-container">
-                <a href="/profile" class="log-out">{{user.username}}</a>
-                <a href="/auth/logout" class="log-out">Logout</a>
-            </div>
-        </nav>
-        {{else}}
-        <nav>
-            <div class="left-container">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/auth/login">Login</a></li>
-                    <li><a href="/auth/register">Register</a></li>
-                </ul>
-            </div>
-        </nav>
-        {{/if}} --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,12 +20,12 @@
             <nav class="main-nav nav-mid">
                 <ul>
                     <li>
-                        <a href="#">Browse</a>
+                        <a href="/auction/browse">Browse</a>
                     </li>
                     {{#if user}}
                     <!-- User actions -->
                     <li class="user">
-                        <a href="#">Publish</a>
+                        <a href="/auction/create">Publish</a>
                     </li>
 
                     <!-- Bonus action -->

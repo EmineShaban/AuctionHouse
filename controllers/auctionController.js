@@ -1,99 +1,117 @@
 const router = require('express').Router()
 const { isAuth, isGueat } = require('../middlewares/authMiddleware')
 const { getErrorMessage } = require('../utils/errorHelper')
-const bookingServices = require('../services/auctionServices')
+const auctionServices = require('../services/auctionServices')
 const userService = require('../services/userService')
 const { preloadTrip, isTripAuthor } = require('../middlewares/tripMiddleware')
 
+router.get('/browse', async (req, res) => {
+    const predmetOffer = await auctionServices.getAll().lean()
+
+    res.render('auction/browse', { predmetOffer })
+})
 router.get('/create', isAuth, (req, res) => {
-    res.render('booking/create')
+    res.render('auction/create')
 })
 
 
 router.post('/create', isAuth, async (req, res) => {
     // console.log(req.body)
-    // if(req.body.hotel.length <4 ){
-    //     return res.render('auth/register', { error: "Hotel name must be at leats 4 characters long!" })
+    // if(req.body.predmet.length <4 ){
+    //     return res.render('auth/register', { error: "predmet name must be at leats 4 characters long!" })
     // }
     // if(req.body.city.length <3 ){
-    //     return res.render('auth/register', { error: "Hotel name must be at leats 3 characters long!" })
+    //     return res.render('auth/register', { error: "predmet name must be at leats 3 characters long!" })
     // }
     try {
-        const hotel = await bookingServices.create({ ...req.body, owner: req.user })
-        await userService.addTrip(req.user._id, hotel._id)
+        const predmet = await auctionServices.create({ ...req.body, owner: req.user })
+        // await userService.addTrip(req.user._id, predmet._id)
         // console.log(req.body)
         res.redirect('/')
     } catch (error) {
-        // const hotel = await bookingServices.create({ ...req.body, owner: req.user })
-// let hotell = req.body
-        return res.render('booking/create', { error: getErrorMessage(error), hotel:req.body })
+        // const predmet = await auctionServices.create({ ...req.body, owner: req.user })
+        // let predmetl = req.body
+        return res.render('auction/create', { error: getErrorMessage(error), predmet: req.body })
     }
 })
 
 router.get(
-    '/:hotelID/details',
-    isAuth,
+    '/:predmetID/details',
     async (req, res) => {
         try {
-            const hotel = await bookingServices.getOne(req.params.hotelID).lean()
-            const user = await userService.getOne(req.user?._id).lean()
-            const isAuthor = hotel.owner == req.user?._id
-            const isAlreadyJoin = user.bookedHotels?.find(element => element == hotel._id) == hotel._id
-            res.render('booking/details', { ...hotel, isAuthor, isAlreadyJoin })
+            const predmet = await auctionServices.getOne(req.params.predmetID).lean()
+            const author = await userService.getOne(predmet.owner).lean()
+            const isAuthor = predmet.owner == req.user?._id
+            const isAlreadyJoin = predmet.bidder?.find(element => element == req.user?._id) == req.user?._id
+            // let idOfBuyer = predmet.bidder.pop()
+            const userBuy = await userService.getOne(predmet.bidder).lean()
+            let count = predmet.bidder.length >0
+console.log(count)
+            res.render('auction/details', { ...predmet, author, isAuthor, isAlreadyJoin, userBuy, count })
         } catch (error) {
-            return res.render(`hotel/details`, { error: getErrorMessage(error) })
+            return res.render(`auction/details`, { error: getErrorMessage(error) })
         }
     })
 
 
 router.get(
-    '/:hotelID/delete',
+    '/:predmetID/delete',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
-        await bookingServices.delete(req.params.hotelID)
-        res.redirect('/')
+        await auctionServices.delete(req.params.predmetID)
+        res.redirect('/auction/browse')
     })
 
 router.get(
-    '/:hotelID/edit',
+    '/:predmetID/edit',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
         try {
-            const hotel = await bookingServices.getOne(req.params.hotelID).lean()
-            res.render('booking/edit', { ...hotel })
+            const predmet = await auctionServices.getOne(req.params.predmetID).lean()
+            res.render('auction/edit', { ...predmet })
         } catch (error) {
-            return res.render(`hotel/details`, { error: getErrorMessage(error) })
+            return res.render(`auction/details`, { error: getErrorMessage(error) })
         }
     })
 
 
 router.post(
-    '/:hotelID/edit',
+    '/:predmetID/edit',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
         try {
-            await bookingServices.update(req.params.hotelID, req.body)
-            res.redirect(`/booking/${req.params.hotelID}/details`)
+            let count = predmet.bidder.length >0
+            await auctionServices.update(req.params.predmetID, req.body)
+
+            res.redirect(`/auction/${req.params.predmetID}/details`, {count})
         } catch (error) {
-            res.render('hotel/edit', { ...req.body, error: getErrorMessage(error) })
+            res.render('auction/edit', { ...req.body, error: getErrorMessage(error) })
         }
     })
 
-router.get(
-    '/:hotelID/join',
+router.post(
+    '/:predmetID/details',
     isAuth,
     preloadTrip,
     async (req, res) => {
         try {
-            await userService.addHotel(req.user._id, req.hotel._id)
-            req.hotel.freeRooms -= 1
-            await bookingServices.updateRooms(req.params.hotelID, req.hotel)
-            res.redirect(`/booking/${req.params.hotelID}/details`)
+            // await userService.addpredmet(req.user._id, req.predmet._id)
+            // req.predmet.freeRooms -= 1
+            if (req.predmet.price >= req.body.price) {
+                return res.render('home', { error: "the amount is less or equal to the current price" })
+            }
+            // console.log(req.predmet.price)
+            await auctionServices.update(req.params.predmetID, req.body)
+            await auctionServices.addBidder(req.params.predmetID, req.user._id)
+
+            // await auctionServices.updatePrice(req.params.predmetID, req.predmet)
+            res.redirect(`/auction/${req.params.predmetID}/details`)
+            // console.log(req.body.price)
         } catch (error) {
-            res.render(`booking/${req.params.hotelID}/details`, { ...req.body, error: getErrorMessage(error) })
+            res.render(`auction/details`, { ...req.body, error: getErrorMessage(error) })
         }
     })
 

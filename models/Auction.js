@@ -29,7 +29,7 @@ const auctionSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
-        // required: true,
+        required: true,
         validate: {
 
             validator: (value) => URL_PATTERN.test(value),

@@ -1,74 +1,46 @@
-{{!-- 
-        <section id="viewRegister">
-            <h2>Create your account:</h2>
-            <form method="post" id="formRegister">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" placeholder="Email" value="">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your Username" value="">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Password" value="">
-                <label for="rePassword">Repeat Password:</label>
-                <input type="password" id="rePassword" name="rePassword" placeholder="Repeat Password" value="">
-                <input type="submit" class="register" value="Register">
-                {{!-- <button type="submit" class="register">Register</button> --}}
-
-            </form>
-        </section> --}}
-
-          <main>
-
-            <!-- In case of error, display the following div-->
-            <!--
-
-            <div class="error-box">
-                <p>Show each error in a separate paragraph</p>
-            </div>
-
-            -->
-   {{#if error}}
+<main>
+    {{#if error}}
     <div class="error-box">
         <span>{{error}}</span>
     </div>
     {{/if}}
-            <!-- Register Page -->
-            <section id="register-section" class="narrow">
+    <section id="register-section" class="narrow">
 
-                <h1 class="item">Register</h1>
+        <h1 class="item">Register</h1>
 
-                <div class="item padded align-center">
+        <div class="item padded align-center">
 
-                    <form class="aligned" method="post" action="">
+            <form class="aligned" method="post" action="">
 
-                        <label>
-                            <span>Email</span>
-                            <input type="text" name="email">
-                        </label>
-                        <label>
-                            <span>First name</span>
-                            <input type="text" name="firstName">
-                        </label>
-                        <label>
-                            <span>Last name</span>
-                            <input type="text" name="lastName">
-                        </label>
-                        <label>
-                            <span>Password</span>
-                            <input type="password" name="password">
-                        </label>
-                        <label>
-                            <span>Repeat Password</span>
-                            <input type="password" name="rePassword">
-                        </label>
+                <label>
+                    <span>Email</span>
+                    <input type="text" name="email">
+                </label>
+                <label>
+                    <span>First name</span>
+                    <input type="text" name="firstName">
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input type="text" name="lastName">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password">
+                </label>
+                <label>
+                    <span>Repeat Password</span>
+                    <input type="password" name="rePassword">
+                </label>
 
-                        <div class="align-center">
-                            <input class="action" type="submit" value="Create Account">
-                        </div>
-
-                    </form>
-
+                <div class="align-center">
+                    <input class="action" type="submit" value="Create Account">
                 </div>
 
-            </section>
+            </form>
 
-        </main>
+        </div>
+
+    </section>
+
+</main>
