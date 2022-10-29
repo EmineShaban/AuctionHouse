@@ -15,7 +15,7 @@
     </form>
 </section> --}}
 <main>
-  {{#if error}}
+    {{#if error}}
     <div class="error-box">
         <span>{{error}}</span>
     </div>
@@ -48,20 +48,19 @@
                     </label>
                     <label>
                         <span>Starting price</span>
-{{#if count}}
+                        {{#if count}}
                         <!-- If the current auction has a bidder, this input field should be disabled -->
-                        <input type="number" name="price" value="{{price}} disabled">
-                        {{else}}                       
-                         <input type="number" name="price" value="{{price}} ">
-{{/if}}
+                        <input type="number" name="price" value="{{price}}" disabled>
+                        {{else}}
+                        <input type="number" name="price" value="{{price}}">
+                        {{/if}}
                     </label>
                 </div>
 
                 <div class="content pad-med align-center vertical">
                     <label>
                         <span>Description</span>
-                        <textarea name="description"> {{description}}
-                                </textarea>
+                        <textarea name="description">{{description}}</textarea>
                     </label>
 
                     <div class="align-center">

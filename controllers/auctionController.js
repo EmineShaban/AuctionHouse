@@ -70,7 +70,9 @@ router.get(
     async (req, res) => {
         try {
             const predmet = await auctionServices.getOne(req.params.predmetID).lean()
-            res.render('auction/edit', { ...predmet })
+            let count = predmet.bidder.length >0 
+
+            res.render('auction/edit', { ...predmet, count})
         } catch (error) {
             return res.render(`auction/details`, { error: getErrorMessage(error) })
         }
@@ -83,10 +85,10 @@ router.post(
     // isTripAuthor,
     async (req, res) => {
         try {
-            let count = predmet.bidder.length >0
+            // let count = predmet.bidder.length >0 
             await auctionServices.update(req.params.predmetID, req.body)
 
-            res.redirect(`/auction/${req.params.predmetID}/details`, {count})
+            res.redirect(`/auction/${req.params.predmetID}/details`)
         } catch (error) {
             res.render('auction/edit', { ...req.body, error: getErrorMessage(error) })
         }
