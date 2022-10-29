@@ -1,11 +1,47 @@
+{{!--
+<section id="viewLogin">
+    <h2>Login:</h2>
+    <form method="post" id="formLogin">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your Username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your Password">
+        <input type="submit" class="login" value="Login">
+    </form>
+</section> --}}
 
-        <section id="viewLogin">
-            <h2>Login:</h2>
-            <form method="post" id="formLogin">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your Username">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your Password">
-                <input type="submit" class="login" value="Login">
+<main>
+
+    {{#if error}}
+    <div class="error-box">
+        <span>{{error}}</span>
+    </div>
+    {{/if}}
+    <section id="login-section" class="narrow">
+
+        <h1 class="item">Login</h1>
+
+        <div class="item padded align-center">
+
+            <form class="aligned" method="post" >
+
+                <label>
+                    <span>Email</span>
+                    <input type="text" name="email">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password">
+                </label>
+
+                <div class="align-center">
+                    <input class="action" type="submit" value="Sign In">
+                </div>
+
             </form>
-        </section>
+
+        </div>
+
+    </section>
+
+</main>
