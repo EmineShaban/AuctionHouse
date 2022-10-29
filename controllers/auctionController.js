@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { isAuth, isGueat } = require('../middlewares/authMiddleware')
 const { getErrorMessage } = require('../utils/errorHelper')
-const bookingServices = require('../services/bookingServices')
+const bookingServices = require('../services/auctionServices')
 const userService = require('../services/userService')
 const { preloadTrip, isTripAuthor } = require('../middlewares/tripMiddleware')
 

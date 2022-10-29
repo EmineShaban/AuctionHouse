@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const bookingServices = require('../services/bookingServices')
+const bookingServices = require('../services/auctionServices')
 const { isAuth } = require('../middlewares/authMiddleware')
 const userService = require('../services/userService')
 

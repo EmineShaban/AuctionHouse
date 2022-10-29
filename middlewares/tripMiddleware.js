@@ -1,4 +1,4 @@
-const bookingServices = require('../services/bookingServices')
+const bookingServices = require('../services/auctionServices')
 
 
 exports.preloadTrip = async (req, res, next) => {
